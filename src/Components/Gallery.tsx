@@ -1,4 +1,5 @@
 import CharacterCard from "./CharacterCard";
+import "./Gallery.css"
 
 export default function Gallery() {
     const chars = {
@@ -265,8 +266,7 @@ export default function Gallery() {
             "created": "2017-11-04T22:34:53.659Z"
         }]
     }
-
-    return (<div>
+    return (<div className={'galleryBox'}>
             {chars.results.map(character => <CharacterCard
                 key={character.id}
                 name={character.name}
