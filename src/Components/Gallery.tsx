@@ -34,19 +34,19 @@ export default function Gallery() {
             .then(data => {
                 setCharacters(data.results)
                 setInfo(data.info)
+                setFilter('')
             })
             .catch(()=>console.log('blöd'))
     }
 
     return <div>
-            <input type="text" placeholder='search' value={filter} onChange={ev=> {
-                setFilter(ev.target.value)
-                setFilter('')
-            }} className={'gallerySearch'}/>
+            <input type="text" placeholder='search' value={filter} onChange={ev=> {setFilter(ev.target.value)}} className={'gallerySearch'}/>
             {info.next && <button onClick={() => setPage(page+1)}>next</button>}
             {info.prev && <button onClick={() => setPage(page-1)}>back</button>}
             <div className={'galleryBox'}>
-                {characters.length>0 ? characters
+                {characters.length>0
+                    ?
+                    characters
                     .filter(char => char.name.toLowerCase().includes(filter.toLowerCase()) )
                     .map(character => <CharacterCard
                                                 key={character.id}
@@ -54,8 +54,10 @@ export default function Gallery() {
                                                 pic={character.image}
                                                 location={character.location.name}
                                                 status={character.status}
-                                                species={character.species}
-                />) : <div>loading...</div>}
+                                                species={character.species}/>)
+                    :
+                    <div>loading...</div>
+                }
             </div>
         </div>
 }
