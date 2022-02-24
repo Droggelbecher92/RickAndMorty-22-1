@@ -1,7 +1,11 @@
 import CharacterCard from "./CharacterCard";
 import "./Gallery.css"
+import {useState} from "react";
 
 export default function Gallery() {
+
+    const [filter,setFilter] = useState('')
+
     const chars = {
         "info": {"count": 826, "pages": 42, "next": "https://rickandmortyapi.com/api/character?page=2", "prev": null},
         "results": [{
@@ -266,15 +270,19 @@ export default function Gallery() {
             "created": "2017-11-04T22:34:53.659Z"
         }]
     }
-    return (<div className={'galleryBox'}>
-            {chars.results.map(character => <CharacterCard
-                key={character.id}
-                name={character.name}
-                pic={character.image}
-                location={character.location.name}
-                status={character.status}
-                species={character.species}
-            />)}
+
+    return (<div>
+            <input type="text" placeholder='filter' value={filter} onChange={ev=> setFilter(ev.target.value)}/>
+            <div className={'galleryBox'}>
+                {chars.results.filter(char => char.name.toLowerCase().includes(filter.toLowerCase()) ).map(character => <CharacterCard
+                    key={character.id}
+                    name={character.name}
+                    pic={character.image}
+                    location={character.location.name}
+                    status={character.status}
+                    species={character.species}
+                />)}
+            </div>
         </div>
     )
 }
