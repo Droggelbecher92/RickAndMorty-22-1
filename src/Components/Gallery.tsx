@@ -25,10 +25,7 @@ export default function Gallery() {
     const [characters,setCharacters] = useState([] as Array<MortyData>)
     const [info,setInfo] = useState({} as MortyInfo)
 
-    useEffect(()=>getChars()
-        ,[page])
-
-    const getChars = () => {
+    useEffect(()=>{
         fetch(`https://rickandmortyapi.com/api/character/?page=${page}`)
             .then(response => response.json())
             .then(data => {
@@ -36,8 +33,8 @@ export default function Gallery() {
                 setInfo(data.info)
                 setFilter('')
             })
-            .catch(()=>console.log('blöd'))
-    }
+            .catch(()=>console.log('blöd'))}
+        ,[page])
 
     return <div>
             <input type="text" placeholder='search' value={filter} onChange={ev=> {setFilter(ev.target.value)}} className={'gallerySearch'}/>
